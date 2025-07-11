@@ -20,6 +20,7 @@ Each is detailed in the following sections.
     - [Open a URL in a System Browser](#open-a-url-in-a-system-browser)
     - [Open a URL in a Web View](#open-a-url-in-a-web-view)
     - [Close](#close)
+- [Theme Mode Configuration](#theme-mode-configuration)
 
 ## Motivation
 
@@ -79,3 +80,13 @@ fun close(completionHandler: (Boolean) -> Unit)
 
 Handles closing an opened browser. The method is composed of the following input parameters:
 - **completionHandler**: The callback with the result of closing the browser.
+
+## Theme Mode Configuration
+
+The library supports configurable theme modes for both WebView and Custom Tabs. You can specify how the in-app browser should handle light and dark themes.
+
+### Available Theme Modes
+
+- **LIGHT**: Forces the in-app browser to use light theme regardless of system settings
+- **DARK**: Forces the in-app browser to use dark theme regardless of system settings  
+- **SYSTEM**: Uses the system's current theme setting (default)

@@ -27,6 +27,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -39,6 +40,7 @@ import com.outsystems.plugins.inappbrowser.osinappbrowserlib.OSIABEvents.OSIABWe
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.R
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABToolbarPosition
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABWebViewOptions
+import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABThemeMode
 import kotlinx.coroutines.launch
 
 class OSIABWebViewActivity : AppCompatActivity() {
@@ -119,6 +121,8 @@ class OSIABWebViewActivity : AppCompatActivity() {
             intent.extras?.getSerializable(WEB_VIEW_OPTIONS_EXTRA) as OSIABWebViewOptions
         }
 
+        // Apply theme mode before setting content view
+        applyThemeMode(options.theme)
         setContentView(R.layout.activity_web_view)
 
         //get elements in screen
@@ -660,6 +664,18 @@ class OSIABWebViewActivity : AppCompatActivity() {
         loadingView.isVisible = false
         webView.isVisible = true
     }
+    /**
+     * Applies the specified theme theme to the activity
+     * @param theme The theme theme to apply
+     */
+    private fun applyThemeMode(theme: OSIABThemeMode) {
+        when (theme) {
+            OSIABThemeMode.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            OSIABThemeMode.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            OSIABThemeMode.SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+    }
+
 
     /**
      * Responsible for handling standard permission requests coming from the WebView
