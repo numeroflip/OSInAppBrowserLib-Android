@@ -6,11 +6,13 @@ import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsSession
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.OSIABEvents
+import com.outsystems.plugins.inappbrowser.osinappbrowserlib.R
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.helpers.OSIABCustomTabsSessionHelper
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.helpers.OSIABCustomTabsSessionHelperInterface
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.helpers.OSIABFlowHelperInterface
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABAnimation
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABCustomTabsOptions
+import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABThemeMode
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABViewStyle
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.views.OSIABCustomTabsControllerActivity
 import kotlinx.coroutines.CoroutineScope
@@ -135,9 +137,33 @@ class OSIABCustomTabsRouterAdapter(
             }
         }
 
+        applyCustomTabsTheming(builder)
+
         builder.setBackgroundInteractionEnabled(true)
 
         return builder.build()
+    }
+
+    private fun applyCustomTabsTheming(builder: CustomTabsIntent.Builder) {
+        when (options.theme) {
+            OSIABThemeMode.LIGHT -> {
+                val lightColorScheme = CustomTabColorSchemeParams.Builder()
+                val toolbarColor = context.getColor(R.color.tool_bar_light_theme)
+                lightColorScheme.setToolbarColor(toolbarColor)
+                lightColorScheme.setNavigationBarColor(toolbarColor)
+                builder.setDefaultColorSchemeParams(lightColorScheme.build())
+            }
+            OSIABThemeMode.DARK -> {
+                val darkColorScheme = CustomTabColorSchemeParams.Builder()
+                val toolbarColor = context.getColor(R.color.tool_bar_dark_theme)
+                darkColorScheme.setToolbarColor(toolbarColor)
+                darkColorScheme.setNavigationBarColor(toolbarColor)
+                builder.setDefaultColorSchemeParams(darkColorScheme.build())
+            }
+            else -> {
+                // Do nothing - preserve default system behavior
+            }
+        }
     }
 
     override fun handleOpen(url: String, completionHandler: (Boolean) -> Unit) {
@@ -205,6 +231,7 @@ class OSIABCustomTabsRouterAdapter(
         val intent = Intent(context, OSIABCustomTabsControllerActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             putExtra(OSIABEvents.EXTRA_BROWSER_ID, browserId)
+            putExtra(OSIABCustomTabsControllerActivity.EXTRA_THEME, options.theme)
         }
 
         if(doClose) {
@@ -215,3 +242,4 @@ class OSIABCustomTabsRouterAdapter(
         context.startActivity(intent)
     }
 }
+

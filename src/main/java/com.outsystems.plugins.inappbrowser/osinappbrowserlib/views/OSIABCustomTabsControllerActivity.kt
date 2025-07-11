@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.OSIABEvents
 import com.outsystems.plugins.inappbrowser.osinappbrowserlib.OSIABEvents.OSIABCustomTabsEvent
+import com.outsystems.plugins.inappbrowser.osinappbrowserlib.models.OSIABThemeMode
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +24,7 @@ class OSIABCustomTabsControllerActivity: AppCompatActivity() {
         const val EVENT_CUSTOM_TABS_PAUSED = "com.outsystems.plugins.inappbrowser.osinappbrowserlib.EVENT_CUSTOM_TABS_PAUSED"
         const val EVENT_CUSTOM_TABS_RESUMED = "com.outsystems.plugins.inappbrowser.osinappbrowserlib.EVENT_CUSTOM_TABS_RESUMED"
         const val ACTION_CLOSE_CUSTOM_TABS = "com.outsystems.plugins.inappbrowser.osinappbrowserlib.ACTION_CLOSE_CUSTOM_TABS"
+        const val EXTRA_THEME = "com.outsystems.plugins.inappbrowser.osinappbrowserlib.EXTRA_THEME"
     }
 
     private fun setup(intent: Intent) {
