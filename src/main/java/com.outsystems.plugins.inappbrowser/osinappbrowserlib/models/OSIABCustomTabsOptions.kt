@@ -6,6 +6,6 @@ data class OSIABCustomTabsOptions(
     val viewStyle: OSIABViewStyle = OSIABViewStyle.FULL_SCREEN,
     val bottomSheetOptions: OSIABBottomSheet? = null,
     val startAnimation: OSIABAnimation = OSIABAnimation.FADE_IN,
-    val exitAnimation: OSIABAnimation = OSIABAnimation.FADE_OUT
+    val exitAnimation: OSIABAnimation = OSIABAnimation.FADE_OUT,
     val theme: OSIABThemeMode = OSIABThemeMode.SYSTEM
 ) : OSIABOptions
